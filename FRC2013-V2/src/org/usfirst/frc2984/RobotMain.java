@@ -129,8 +129,6 @@ public class RobotMain extends SimpleRobot {
             	//cam.takePic();
             }
             
-            
-            
             drivetrain.drive(regression(driveControls.getRawAxis(2)), regression(driveControls.getRawAxis(1)));
             //drivetrain.drive(driveControls.getRawAxis(2), driveControls.getRawAxis(1));
             
