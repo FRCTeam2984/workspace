@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.SensorBase"/>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.CounterBase"/>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.CounterBase.EncodingType"/>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.Encoder"/>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.Gyro"/>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.camera.AxisCameraException"/>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.image.RGBImage"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="edu.wpi.first.wpilibj.Timer"/>
+</qualifiedTypeNameHistroy>
