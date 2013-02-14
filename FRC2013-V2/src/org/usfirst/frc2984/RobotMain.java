@@ -100,8 +100,7 @@ public class RobotMain extends SimpleRobot {
             	//drivetrain.setShooter2(shooterSpeed);
             	System.out.println("Shooter speed: " + shooterSpeed);
             	Timer.delay(.1);
-            }
-            
+            }   
             
             
             /*
