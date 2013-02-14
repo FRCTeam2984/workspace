@@ -1,7 +1,0 @@
-package org.usfirst.frc2984;
-
-public class DriveTrain {
-	public void drive(double leftValue, double rightValue) {
-		
-	}
-}
