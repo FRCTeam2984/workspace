@@ -44,7 +44,7 @@ public class RobotCode extends SimpleRobot {
 	public void operatorControl() {
 		while (isEnabled() && isOperatorControl()) {
 			drive.drive(regression(controller1.getRawAxis(2)),
-					regression(controller1.getRawAxis(1)));
+					regression(controller1.getRawAxis(1))); 
 
 			if (controller1.getRawButton(6)) {
 				regressionMultiplier += 2;
