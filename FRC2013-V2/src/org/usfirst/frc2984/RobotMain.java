@@ -102,7 +102,6 @@ public class RobotMain extends SimpleRobot {
             	Timer.delay(.1);
             }
             
-            
             /*
             if(driveControls.getRawButton(2)){
             	en1.reset();
