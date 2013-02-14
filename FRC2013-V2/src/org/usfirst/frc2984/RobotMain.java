@@ -93,6 +93,7 @@ public class RobotMain extends SimpleRobot {
             	Timer.delay(.1);
             }
             
+            
             if(driveControls.getRawButton(1)){
             	if(shooterSpeed < 0) shooterSpeed += .01;
             	drivetrain.setShooter1(shooterSpeed);
