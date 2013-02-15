@@ -92,11 +92,8 @@ public class CameraTools {
                 	if(close.center_mass_x_normalized > reports[i].center_mass_x_normalized)
                 		close = reports[i];
                 }
-                
             }
             
-            
-
             filteredImage.free();
             convexHullImage.free();
             bigObjectsImage.free();
