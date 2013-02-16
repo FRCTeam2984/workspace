@@ -1,6 +1,7 @@
 
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
@@ -40,14 +41,20 @@ public class CameraTest extends SimpleRobot {
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
 	private Drivetrain2 drivetrain;
+    Joystick control;
+    int red, blue, green;
     private final static double TRACKING_ERROR = .05;
     
     public void robotInit() {
+        control = new Joystick(1);
         camera = AxisCamera.getInstance();  // get an instance ofthe camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 400, false);
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 40, 400, false);
         drivetrain = new Drivetrain2();
+        red = 35;
+        blue = 35;
+        green = 25;
     }
 
     public void autonomous() {
@@ -97,11 +104,65 @@ public class CameraTest extends SimpleRobot {
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
+    	boolean move = false;
         while (isOperatorControl() && isEnabled()) {
+        		
         	
-                ParticleAnalysisReport r = track(null);
+        	if(control.getRawButton(4)){
+				red--;
+				System.out.println("Red: " + red);
+				Timer.delay(.1);
+			}
+			if(control.getRawButton(5)){
+				red++;
+				System.out.println("Red: " + red);
+				Timer.delay(.1);
+			}
+			
+			if(control.getRawButton(2)){
+				blue--;
+				System.out.println("Blue: " + blue);
+				Timer.delay(.1);
+			}
+			if(control.getRawButton(3)){
+				blue++;
+				System.out.println("Blue: " + blue);
+				Timer.delay(.1);
+			}
+			
+			if(control.getRawButton(8)){
+				green--;
+				System.out.println("Green: " + green);
+				Timer.delay(.1);
+			}
+			if(control.getRawButton(9)){
+				green++;
+				System.out.println("Green: " + green);
+				Timer.delay(.1);
+			}
+			
+			if(control.getRawButton(1)){
+				System.out.println("Taking picture");
+				try {
+					camera.getImage().write("image.png");
+				} catch (NIVisionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (AxisCameraException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Timer.delay(.1);
+			}
+			
+                ParticleAnalysisReport r = track(null, red, green, blue);
                 
-                boolean move = false;
+                
+                if(control.getRawButton(11)){
+                	move = !move;
+                	System.out.println("Toggling movement: " + move);
+                	Timer.delay(1);
+                }
                 
                 if(r != null){
                 	
@@ -110,26 +171,25 @@ public class CameraTest extends SimpleRobot {
                 	if(Math.abs(r.center_mass_x_normalized) < TRACKING_ERROR ){
                 		//TODO: Shoot
                 		drivetrain.drive(0,0);
-                	} else if(move) drivetrain.drive(r.center_mass_x_normalized,r.center_mass_x_normalized);
+                		System.out.println("Centered!");
+                	} else if(move){
+                		drivetrain.drive(0,r.center_mass_x_normalized / 2);
+                	} else drivetrain.drive(0, 0);
                 	
                 	System.out.println(r.center_mass_x_normalized);
                 	
-                }
+                } else System.out.println("No rectangle found!");
 
-            Timer.delay(1);
+            Timer.delay(.1);
         }
     }
     
-	public ParticleAnalysisReport track(String file){
+	public ParticleAnalysisReport track(String file, int red, int green, int blue){
 		try {
-            /**
-             * Do the image capture with the camera and apply the algorithm described above. This
-             * sample will either get images from the camera or from an image file stored in the top
-             * level directory in the flash memory on the cRIO. The file name in this case is "10ft2.jpg"
-             * 
-             */
+			
+			
             ColorImage image = (file != null ? new RGBImage(file) : camera.getImage());
-            BinaryImage thresholdImage = image.thresholdRGB(0, 45, 25, 255, 0, 47);   // keep only green objects
+            BinaryImage thresholdImage = image.thresholdRGB(0, red, green, 255, 0, blue);   // keep only green objects
             BinaryImage bigObjectsImage = thresholdImage.removeSmallObjects(false, 2);  // remove small artifacts
             BinaryImage convexHullImage = bigObjectsImage.convexHull(false);          // fill in occluded rectangles
             BinaryImage filteredImage = convexHullImage.particleFilter(cc);// find filled in rectangles
