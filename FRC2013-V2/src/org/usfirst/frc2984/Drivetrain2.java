@@ -18,7 +18,6 @@ public class Drivetrain2 {
     private Jaguar right2;
     private Jaguar shooter1;
     private Jaguar shooter2;
-    private Jaguar bands;
     private Jaguar launcher;
     private final double LAUNCHER_SPEED = .50;
     private final long LAUNCHER_TIME = 440;
@@ -30,7 +29,6 @@ public class Drivetrain2 {
         right2 = new Jaguar(RobotMap.RIGHT2);
         shooter1 = new Jaguar(RobotMap.SHOOTER1);
         shooter2 = new Jaguar(RobotMap.SHOOTER2);
-        bands = new Jaguar(RobotMap.BANDS);
         launcher = new Jaguar(RobotMap.INSERTER);
         firing = false;
         
